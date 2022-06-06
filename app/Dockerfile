@@ -21,7 +21,7 @@ RUN cargo build --target aarch64-unknown-linux-musl --release
 RUN ls /usr/src/robernetes/target/aarch64-unknown-linux-musl/release
 
 # Bundle Stage
-FROM scratch
+FROM --platform=$BUILDPLATFORM scratch
 COPY --from=builder /usr/src/robernetes/hello.html .
 COPY --from=builder /usr/src/robernetes/target/aarch64-unknown-linux-musl/release/app ./robernetes
 

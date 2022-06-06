@@ -4,6 +4,8 @@ use std::net::TcpStream;
 use std::fs;
 
 fn main() {
+    println!("Starting web server...");
+
     let listener = TcpListener::bind("127.0.0.1:8090").unwrap();
 
     for stream in listener.incoming() {
@@ -14,6 +16,8 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
+    println!("Got connection request");
+
     let mut buffer = [0; 1024];
     stream.read(&mut buffer).unwrap();
 
