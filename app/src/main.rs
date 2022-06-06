@@ -23,16 +23,20 @@ fn handle_connection(mut stream: TcpStream) {
 
     let get = b"GET / HTTP/1.1\r\n";
 
-    let contents = fs::read_to_string("hello.html").unwrap();
+    if buffer.starts_with(get) {
+        let contents = fs::read_to_string("hello.html").unwrap();
 
-    println!("Got content {}", contents.len());
+        println!("Got content {}", contents.len());
+    
+        let response = format!(
+            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
+            contents.len(),
+            contents
+        );
+    
+        stream.write(response.as_bytes()).unwrap();
+        stream.flush().unwrap();
+    } else {
 
-    let response = format!(
-        "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
-        contents.len(),
-        contents
-    );
-
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
+    }
 }
