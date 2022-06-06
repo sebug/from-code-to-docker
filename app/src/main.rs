@@ -21,6 +21,8 @@ fn handle_connection(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
     stream.read(&mut buffer).unwrap();
 
+    let get = b"GET / HTTP/1.1\r\n";
+
     let contents = fs::read_to_string("hello.html").unwrap();
 
     println!("Got content {}", contents.len());
